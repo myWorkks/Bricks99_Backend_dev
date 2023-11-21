@@ -15,7 +15,7 @@ public class Bricks99LoggingAspect {
 	
 	
 	@AfterThrowing(pointcut = "execution(* com.marolix.Bricks99.service.*Impl.*(..))",throwing = "exception")
-	public void logServiceException(Bricks99Exception exception) {
+	public void logServiceException(Exception exception) {
 		LOGGER.error(exception.getMessage(),exception);
 	}
 

@@ -198,7 +198,8 @@ public class PropertyDetailsDTO {
 		dto.setPropertyType(p.getPropertyType());
 		dto.setPropertyPrice(p.getPropertyPrice());
 		dto.setSellerId(p.getSeller().getSellerId());
-		dto.setNumberOfRooms(p.getNumberOfRooms());
+
+		
 		//System.out.println("printing file names "+p.getFilepaths());
 		dto.setFilePaths(Arrays.asList(p.getFilepaths().split(" ")));
 		PropertyAddressDTO adto = new PropertyAddressDTO();
@@ -206,6 +207,7 @@ public class PropertyDetailsDTO {
 		adto.setAddressId(pa.getAddressId());
 		adto.setCity(pa.getCity());
 		adto.setAddressLine(pa.getAddressLine());
+		
 		adto.setPincode(pa.getPincode());
 		adto.setSurveyNo(pa.getSurveyNo());
 		adto.setState(pa.getState());

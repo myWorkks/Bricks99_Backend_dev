@@ -2,8 +2,13 @@ package com.marolix.Bricks99.service;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +37,8 @@ public class SellerServiceImpl implements SellerService {
 	private SellerRepository sellerRepository;
 	@Autowired
 	private Environment environment;
+	@Autowired
+	private JavaMailSender javaMailSender;
 
 	private String validation(String variable, String password, UserLogin ulogin) throws Bricks99Exception {
 		System.out.println(variable);
@@ -87,6 +94,17 @@ public class SellerServiceImpl implements SellerService {
 		u.setContact(sellerDTO.getContact());
 		u.setEmail(sellerDTO.getEmail());
 		userLoginRepository.save(u);
+//		MimeMessage mm = javaMailSender.createMimeMessage();
+//		try {
+//			MimeMessageHelper helper = new MimeMessageHelper(mm, true);
+//			helper.setTo(newSR.getEmail());
+//			helper.setText("Your registration is successful ");
+//			helper.setSubject("Registration-successful");
+//			javaMailSender.send(mm);
+//		} catch (MessagingException e) {
+//
+//			throw new Bricks99Exception(e.getMessage());
+//		}
 		return sellerDTO;
 	}
 

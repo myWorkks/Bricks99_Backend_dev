@@ -3,8 +3,13 @@ package com.marolix.Bricks99.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +20,7 @@ import com.marolix.Bricks99.entity.UserType;
 import com.marolix.Bricks99.exception.Bricks99Exception;
 import com.marolix.Bricks99.repository.UserRepository;
 import com.marolix.Bricks99.repository.UserTypeRepository;
+import com.marolix.Bricks99.utility.BasicUtility;
 import com.marolix.Bricks99.utility.HashingUtility;
 
 @Service(value = "userService")
@@ -28,11 +34,16 @@ public class UserServiceImpl implements UserService {
 	private UserTypeRepository userTypeRepository;
 	@Autowired
 	private SellerService sellerService;
+	@Autowired
+	private EmailSender emailSender;
+	@Autowired
+	private BasicUtility basicUtility;
 
 	@Override
 	public UserDTO addUser(UserDTO dto) throws Bricks99Exception {
-
+		System.out.println("user invoked");
 		User sr = userRepository.findByContact(dto.getContact());
+		System.out.println("repo user " + sr);
 		if (sr != null)
 			throw new Bricks99Exception(environment.getProperty("UserService.Phone_Exists"));
 		User sr2 = userRepository.findByEmail(dto.getEmail());
@@ -52,12 +63,15 @@ public class UserServiceImpl implements UserService {
 		user.setEmail_verified(true);
 		user.setContact_verified(false);
 		user = userRepository.save(user);
-		System.out.println(user);
+		// System.out.println(user);
+		if (user.getUserType().equals("SELLER"))
+			sellerService.registerSeller(user);
 
-		sellerService.registerSeller(user);
-		UserDTO udto = new UserDTO();
-		udto.setUserId(user.getUserId());
-		return udto;
+		dto.setUserId(user.getUserId());
+		emailSender.sendRegistrationMail(basicUtility.adjustCaseOfName(user.getFirstName(), user.getLastName()),
+				user.getEmail());
+
+		return dto;
 	}
 
 	@Override
@@ -80,8 +94,7 @@ public class UserServiceImpl implements UserService {
 			if (!dto.getEmail().equals(user.getEmail())
 					|| !HashingUtility.hashedString(dto.getPassword()).equals(user.getPassword()))
 				throw new Bricks99Exception(environment.getProperty("UserSevice.invalid_email_credentials"));
-		}
-		else
+		} else
 			throw new Bricks99Exception(environment.getProperty("UserSevice.phone_and_email_not_found"));
 	}
 

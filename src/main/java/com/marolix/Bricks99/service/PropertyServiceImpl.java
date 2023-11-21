@@ -155,7 +155,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public List<PropertyDetailsDTO> findAllProperties(Integer... id) throws Bricks99Exception {
-		System.out.println(id);
+		//System.out.println(id);
 		final List<PropertyDetailsDTO> dtos = new ArrayList<PropertyDetailsDTO>();
 
 		Iterable<PropertyDetails> properties = propertyRepo.findAll();
