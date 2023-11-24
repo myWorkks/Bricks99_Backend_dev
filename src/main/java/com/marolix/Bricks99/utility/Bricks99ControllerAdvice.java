@@ -62,7 +62,7 @@ public class Bricks99ControllerAdvice {
 			error.setTime(LocalDateTime.now());
 			error.setErrorCode(HttpStatus.BAD_REQUEST.value());
 			error.setErrorMessage(((MethodArgumentNotValidException) exp).getBindingResult().getAllErrors().stream()
-					.map(t->t.getDefaultMessage()).collect(Collectors.joining(", ")));
+					.map(t -> t.getDefaultMessage()).collect(Collectors.joining(", ")));
 			return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 		}
 	}

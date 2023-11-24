@@ -10,8 +10,10 @@ G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\ma
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\PropertyService.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\repository\UserLoginRepository.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\dto\UpdateDetailsDTO.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\repository\CommentRepository.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\UserServiceImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\repository\UserRepository.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\S3BucketConfiguration.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\EmailSender.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\utility\BasicUtility.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\repository\UserBackUpRepository.java
@@ -29,6 +31,7 @@ G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\ma
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\PropertyDetails.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\dto\UserDTO.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\repository\OTPRepository.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\CommentServiceImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\PropertyServiceImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\Bricks99EmailConfiguration.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\SellerStatus.java
@@ -39,11 +42,13 @@ G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\ma
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\AddressUtilityServiceImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\repository\UserTypeRepository.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\api\SellerAPI.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\Comment.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\Pincodes.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\AdminServiceImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\SellerServiceImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\EmailSenderImpl.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\Bricks99Application.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\dto\CommentDTO.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\AddressUtilityService.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\api\TextAPI.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\dto\PropertyDetailsDTO.java
@@ -58,4 +63,6 @@ G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\ma
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\api\EmailAPI.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\States.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\UserBackUp.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\service\CommentService.java
+G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\api\CommentAPI.java
 G:\MyWorks\Bricks99Srczip\Bricks99_BackEnd\Bricks99_BackEnd\src\main\java\com\marolix\Bricks99\entity\Seller.java

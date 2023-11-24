@@ -27,7 +27,7 @@ public class PropertyDetails {
 	private String propertyType;
 
 	@Column(name = "property_price")
-	private double propertyPrice;
+	private Double propertyPrice;
 
 	@Column(name = "number_of_rooms")
 	private Integer numberOfRooms;
@@ -197,7 +197,10 @@ public class PropertyDetails {
 	@Override
 	public String toString() {
 		return "PropertyDetails [propertyId=" + propertyId + ", propertyName=" + propertyName + ", propertyType="
-				+ propertyType + ", filepaths=" + filepaths + "]";
+				+ propertyType + ", propertyPrice=" + propertyPrice + ", numberOfRooms=" + numberOfRooms
+				+ ", areaInSqft=" + areaInSqft + ", address=" + address + ", bathRooms=" + bathRooms + ", bedRooms="
+				+ bedRooms + ", description=" + description + ", category=" + category + ", buildingAge=" + buildingAge
+				+ ", noOfPhotos=" + noOfPhotos + ", filepaths=" + filepaths + ", seller=" + seller + "]";
 	}
 
 }

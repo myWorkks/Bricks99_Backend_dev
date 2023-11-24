@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Property Details</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 20px;
+		}
+
+		.property-info {
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			margin: 20px auto;
+			max-width: 600px;
+		}
+
+		h2 {
+			color: #333;
+		}
+
+		.property-detail {
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="property-info">
+		<h2>Property Details</h2>
+		<div class="property-detail">
+			<strong>Property Name:</strong> <span th:text="${propertyName}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Property ID:</strong> <span th:text="${propertyId}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Property Type:</strong> <span th:text="${propertyType}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Property Price:</strong> <span th:text="${propertyPrice}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Number of Rooms:</strong> <span th:text="${numberOfRooms}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Area (in sqft):</strong> <span th:text="${areaInSqft}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Category:</strong> <span th:text="${category}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Bathrooms:</strong> <span th:text="${bathRooms}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Bedrooms:</strong> <span th:text="${bedRooms}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Number of Photos Uploaded:</strong> <span th:text="${noOfPhotosUploaded}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Property Address:</strong>
+			<span th:text="${addressLine + ', ' + city + ', ' + state + ', ' + pincode}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Seller ID:</strong> <span th:text="${sellerId}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Building Age:</strong> <span th:text="${buildingAge}"></span>
+		</div>
+		<div class="property-detail">
+			<strong>Description:</strong> <span th:text="${description}"></span>
+		</div>
+
+		<!-- Iterate over the filePaths and display them -->
+		<div class="property-detail">
+			<strong>Photo URLs:</strong>
+			<ul>
+				<li th:each="filePath : ${filePaths}">
+					<img th:src="${filePath}" alt="image">
+				</li>
+			</ul>
+
+
+		</div>
+	</div>
+
+</body>
+
+</html>

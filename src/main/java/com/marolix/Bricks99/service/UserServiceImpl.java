@@ -61,12 +61,14 @@ public class UserServiceImpl implements UserService {
 		user.setUserType(ut);
 		user.setRegisteredAt(LocalDateTime.now());
 		user.setEmail_verified(true);
-		user.setContact_verified(false);
+		user.setContact_verified(true);
 		user = userRepository.save(user);
 		// System.out.println(user);
-		if (user.getUserType().equals("SELLER"))
+		if (user.getUserType().getUserTypeName().equalsIgnoreCase("SELLER"))
 			sellerService.registerSeller(user);
-
+		dto.setEmail_verified(user.getEmail_verified());
+		dto.setContact_verified(user.getContact_verified());
+		dto.setRegisteredAt(user.getRegisteredAt());
 		dto.setUserId(user.getUserId());
 		emailSender.sendRegistrationMail(basicUtility.adjustCaseOfName(user.getFirstName(), user.getLastName()),
 				user.getEmail());

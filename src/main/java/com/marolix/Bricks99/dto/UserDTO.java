@@ -1,24 +1,21 @@
 package com.marolix.Bricks99.dto;
 
-import java.time.LocalDate;
-
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 import com.marolix.Bricks99.entity.UserType;
 
 public class UserDTO {
+
 	private Integer userId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String contact;
-	private LocalDate registeredAt;
+	private LocalDateTime registeredAt;
 	private String password;
 	private Boolean contact_verified;
 	private Boolean email_verified;
-	
+
 	private UserType userType;
 
 	public Integer getUserId() {
@@ -61,11 +58,11 @@ public class UserDTO {
 		this.contact = contact;
 	}
 
-	public LocalDate getRegisteredAt() {
+	public LocalDateTime getRegisteredAt() {
 		return registeredAt;
 	}
 
-	public void setRegisteredAt(LocalDate registeredAt) {
+	public void setRegisteredAt(LocalDateTime registeredAt) {
 		this.registeredAt = registeredAt;
 	}
 
@@ -108,6 +105,5 @@ public class UserDTO {
 				+ ", contact_verified=" + contact_verified + ", email_verified=" + email_verified + ", userType="
 				+ userType + "]";
 	}
-	
-	
+
 }

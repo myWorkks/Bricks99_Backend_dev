@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 import com.marolix.Bricks99.entity.SellerAddress;
 import com.marolix.Bricks99.entity.Seller;
 import com.marolix.Bricks99.entity.SellerStatus;
+import com.marolix.Bricks99.exception.Bricks99Exception;
 import com.marolix.Bricks99.utility.HashingUtility;
 
 public class SellerDTO {
@@ -128,7 +129,7 @@ public class SellerDTO {
 
 	}
 
-	public static Seller dtoToEntity(SellerDTO sellerDTO) {
+	public static Seller dtoToEntity(SellerDTO sellerDTO) throws Bricks99Exception {
 
 		Seller newSR = new Seller();
 		newSR.setContact(sellerDTO.getContact());

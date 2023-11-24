@@ -1,6 +1,8 @@
 package com.marolix.Bricks99.service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.mail.internet.MimeMessage;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.marolix.Bricks99.dto.PropertyDetailsDTO;
 import com.marolix.Bricks99.entity.OTPDetails;
 import com.marolix.Bricks99.exception.Bricks99Exception;
 import com.marolix.Bricks99.repository.OTPRepository;
@@ -131,6 +134,28 @@ public class EmailSenderImpl implements EmailSender {
 		o.setOtp(otp);
 		o.setTime(LocalDateTime.now());
 		otpRepository.save(o);
+
+	}
+
+	@Override
+	public void addedProperty(PropertyDetailsDTO dto, String to) throws Bricks99Exception {
+		Context con = new Context();
+		con.setVariable("propertyName", dto.getPropertyName());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("propertyId", dto.getPropertyId());
+		map.put("propetyType", dto.getPropertyType());
+		map.put("propertyPrice",dto.getPropertyPrice());
+		map.put("numberOfRooms", dto.getNumberOfRooms());
+		map.put("areaInSqft", dto.getAreaInSqft());
+		map.put("category",dto.getCategory());
+		map.put("bathRooms", dto.getBathRooms());
+		map.put("bedRooms",dto.getBedRooms());
+		map.put("addressLine", dto.getPropertyAddress().getAddressLine());
+		map.put("filePaths", dto.getFilePaths());
+		con.setVariables(map);
+		String html = templateEngine.process("Propertyadded", con);
+		String subject = "Property Added Successfully";
+		sendEmail(true, to, subject, html);
 
 	}
 }

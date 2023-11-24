@@ -2,55 +2,230 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>OTP Email Template</title>
+	<meta charset="UTF-8" />
+	<title>OTP Email Template</title>
 
-    <style>
-       body {
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-image: url("https://wallpapercave.com/wp/wp1898205.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
 
-.email-container {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center;
-}
+		nav {
+			background-color: #333;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			padding: 10px;
+		}
 
-h2 {
-    color: #009688;
-    font-size: 24px;
-    font-weight: bold;
-}
+		.logo {
+			width: 50px;
+			height: 50px;
+			margin-right: 80px;
+			background-color: white;
+		}
 
-p {
-    margin: 10px 0;
-}
+		.logo img {
+			padding: 2px;
+			width: 200%;
+			height: 100%;
+			object-fit: contain;
+			background-color: white;
 
-    </style>
+		}
+
+		.navbar-title {
+			font-size: 24px;
+			margin-right: auto;
+		}
+
+		.nav-links {
+			list-style: none;
+			display: flex;
+			margin: 0;
+			padding: 0;
+		}
+
+		.nav-links li {
+			margin-right: 20px;
+
+		}
+
+		.nav-links a {
+			color: #fff;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		.btn-login,
+		.btn-signup {
+			background-color: green;
+			color: #fff;
+			padding: 8px 16px;
+			border: none;
+			border-radius: 4px;
+			font-weight: bold;
+			cursor: pointer;
+			text-decoration: none;
+			margin-right: 10px;
+		}
+
+		.container {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			/* Change to column */
+			align-items: flex-start;
+			/* Align content to the left */
+			justify-content: space-between;
+			/* Add space between content and footer */
+			padding: 20px;
+		}
+
+		.card {
+			max-width: 4000px;
+			/* Adjust the maximum width as per your requirement */
+			width: 800px;
+			margin-bottom: 20px;
+			/* Add margin to separate card and footer */
+		}
+
+		.footer {
+			background-color: #333;
+
+			color: #fff;
+			padding: 10px;
+			width: 100%;
+		}
+
+		.top {
+			background-color: #333;
+			background-image: url("https://mkparidhan.com/wp-content/uploads/elementor/thumbs/friendship-day-qb0ak062opxgzswd0g45jbf4wq3n0nb3v26j081ssg.jpeg");
+			background-position: 0%;
+			color: #fff;
+			padding: 10px;
+			width: 100%;
+			height: 200px;
+		}
+
+		.card-img-top {
+			width: 100px;
+			background-color: rgb(253, 235, 230);
+		}
+
+		.footer-links {
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.footer-links ul {
+			list-style: none;
+			display: flex;
+			margin: 0;
+			padding: 0;
+		}
+
+		.footer-links ul li {
+			margin-right: 20px;
+		}
+
+		.footer-links ul li a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.follow-us {
+			display: flex;
+			align-items: center;
+		}
+
+
+
+		.follow-us h3 {
+			margin-right: 10px;
+		}
+
+		.social-media-links a {
+			margin-right: 10px;
+		}
+
+		.social-media-links img {
+			width: 20px;
+			height: 20px;
+		}
+
+		.footer {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			width: 100%;
+		}
+	</style>
+
+	<link rel="stylesheet" type="text/css"
+		th:href="@{https://cdn.jsdelivr.net/webjars/bootstrap/4.0.0-beta.2/css/bootstrap.min.css}" />
+	<!--<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />-->
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+		integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
+
 
 <body>
 
-    <div class="email-container">
-        <p>Hello,</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 mx-auto">
+				<div class="card">
+					<div class="top">
+						<p>
+						<h2>Bricks99</h2>
+						</p>
+					</div>
+					<img src="logo.svg.png" class="card-img-top" alt="Card Image">
+					<div class="card-body">
+						<p>Hello,</p>
+						<h4 class="card-title">Your One-Time Password (OTP) is : <span>
+								<h2 th:text="${otp}"></h2>
+							</span> </h4>
+						<p class="card-text">This OTP is valid for a short period of time. Please use it to verify your
+							identity</p>
+						<p>If you did not request this OTP, please ignore this email</p>
+						<p>Thank you</p>
 
-        <p>Your One-Time Password (OTP) is:</p>
+					</div>
+					<div class="footer">
+						<h3>Follow Us</h3>
+						<div class="social-media-links">
+							<!-- Font Awesome icons for Instagram, Twitter, and Facebook -->
+							<a href="#" target="_blank"><i class="fab fa-facebook"></i>d</a>
+							<a href="#" target="_blank"><i class="fab fa-twitter"></i>c</a>
+							<a href="#" target="_blank"><i class="fab fa-instagram"></i>b</a>
+							<!-- You can find the appropriate Font Awesome class for LinkedIn and replace it -->
+							<a href="#"><i class="fab fa-linkedin"></i>a</a>
+						</div>
+						<!-- Footer content goes here -->
+						<p class="text text-danger">© 2023 Bricks99. All rights reserved.</p>
+					</div>
+				</div>
+			</div>
 
-        <h2 th:text="${otp}"></h2>
+		</div>
 
-        <p>This OTP is valid for a short period of time. Please use it to verify your identity.</p>
-
-        <p>If you did not request this OTP, please ignore this email.</p>
-
-        <p>Thank you,</p>
-        <p>Your Company Name</p>
-    </div>
+	</div>
 
 </body>
 

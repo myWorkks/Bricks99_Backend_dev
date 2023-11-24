@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +13,7 @@ import com.marolix.Bricks99.entity.PropertyDetails;
 import com.marolix.Bricks99.entity.Seller;
 
 public class PropertyDetailsDTO {
+
 	private Integer propertyId;
 
 	@Pattern(regexp = "^[A-Za-z0-9/.,-]+$", message = "{property.address.propertyName.invalid}")
@@ -25,7 +25,8 @@ public class PropertyDetailsDTO {
 	@Pattern(regexp = "^[0-9]+(\\.[0-9]{1,3})?$", message = "{property.address.propertyPrice.invalid}")
 	private Double propertyPrice;
 
-	//@Pattern(regexp = "^[1-9][0-9]*[a-zA-Z]*$", message = "{property.address.numberOfRooms.invalid}")
+	// @Pattern(regexp = "^[1-9][0-9]*[a-zA-Z]*$", message =
+	// "{property.address.numberOfRooms.invalid}")
 	private Integer numberOfRooms;
 	private Double areaInSqft;
 
@@ -199,15 +200,14 @@ public class PropertyDetailsDTO {
 		dto.setPropertyPrice(p.getPropertyPrice());
 		dto.setSellerId(p.getSeller().getSellerId());
 
-		
-		//System.out.println("printing file names "+p.getFilepaths());
+		// System.out.println("printing file names "+p.getFilepaths());
 		dto.setFilePaths(Arrays.asList(p.getFilepaths().split(" ")));
 		PropertyAddressDTO adto = new PropertyAddressDTO();
 		PropertyAddress pa = p.getAddress();
 		adto.setAddressId(pa.getAddressId());
 		adto.setCity(pa.getCity());
 		adto.setAddressLine(pa.getAddressLine());
-		
+
 		adto.setPincode(pa.getPincode());
 		adto.setSurveyNo(pa.getSurveyNo());
 		adto.setState(pa.getState());
@@ -233,6 +233,7 @@ public class PropertyDetailsDTO {
 		dto.setPropertyName(p.getPropertyName());
 		dto.setPropertyType(p.getPropertyType());
 		dto.setPropertyPrice(p.getPropertyPrice());
+		
 		PropertyAddress adto = new PropertyAddress();
 		PropertyAddressDTO pa = p.getPropertyAddress();
 
@@ -241,6 +242,7 @@ public class PropertyDetailsDTO {
 		adto.setPincode(pa.getPincode());
 		adto.setSurveyNo(pa.getSurveyNo());
 		adto.setState(pa.getState());
+
 		dto.setAddress(adto);
 
 		return dto;

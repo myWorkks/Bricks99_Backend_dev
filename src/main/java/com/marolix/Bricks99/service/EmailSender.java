@@ -1,6 +1,8 @@
 package com.marolix.Bricks99.service;
 
+import com.marolix.Bricks99.dto.PropertyDetailsDTO;
 import com.marolix.Bricks99.entity.OTPDetails;
+import com.marolix.Bricks99.entity.PropertyDetails;
 import com.marolix.Bricks99.exception.Bricks99Exception;
 
 public interface EmailSender {
@@ -13,4 +15,5 @@ public interface EmailSender {
 
 	public void verifyOTP(OTPDetails otpDetails) throws Bricks99Exception;
 
+	public void addedProperty(PropertyDetailsDTO dto, String to) throws Bricks99Exception;
 }

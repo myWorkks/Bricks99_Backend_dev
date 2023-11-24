@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
 @Configuration
 
 public class Bricks99EmailConfiguration {
@@ -21,10 +26,11 @@ public class Bricks99EmailConfiguration {
 	@Value("${spring.mail.password}")
 	private String password;
 
+
 	@Bean
 	public JavaMailSender javaMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		
+
 		mailSender.setHost(host);
 		mailSender.setPort(port);
 		mailSender.setUsername(username);

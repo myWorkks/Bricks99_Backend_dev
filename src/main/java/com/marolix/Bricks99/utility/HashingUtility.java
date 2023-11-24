@@ -1,50 +1,26 @@
 package com.marolix.Bricks99.utility;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
+import com.marolix.Bricks99.exception.Bricks99Exception;
+
 public class HashingUtility {
-	public static String hashedString(String str) {
-		String reverseString = "";
-		String hashedString = "";
+	public static String hashedString(String plainPassword) throws Bricks99Exception {
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+			byte[] hashBytes = messageDigest.digest(plainPassword.getBytes());
 
-		for (int i = str.length() - 1; i >= 0; i--) {
+			// Convert the byte array to a hexadecimal string
+			StringBuilder stringBuilder = new StringBuilder();
+			for (byte b : hashBytes) {
+				stringBuilder.append(String.format("%02x", b));
+			}
 
-			reverseString += str.charAt(i);
+			return stringBuilder.toString();
+		} catch (NoSuchAlgorithmException e) {
+			throw new Bricks99Exception("Error while hashing password. " + e.getMessage());
 		}
-		for (int i = 0; i < reverseString.length(); i++) {
-
-			Character c = reverseString.charAt(i);
-			if (Character.isDigit(c)) {
-				hashedString += Integer.toHexString(c);
-			} else if (Character.isLetter(c)) {
-				hashedString += Integer.toOctalString(c);
-			} else if (!Character.isDigit(c) && !Character.isLetter(c) && !Character.isWhitespace(c))
-				hashedString += Integer.toBinaryString(c);
-		}
-		if (hashedString.contains("0")) {
-			hashedString = hashedString.replace("0", "k");
-		} else if (hashedString.contains("1"))
-			hashedString = hashedString.replace("1", "p");
-		else if (hashedString.contains("2"))
-			hashedString = hashedString.replace("2", "a");
-		else if (hashedString.contains("3"))
-			hashedString = hashedString.replace("3", "L");
-		else if (hashedString.contains("4"))
-			hashedString = hashedString.replace("4", "b");
-		else if (hashedString.contains("7"))
-			hashedString = hashedString.replace("7", "M");
-		else if (hashedString.contains("5"))
-
-			hashedString = hashedString.replace("5", "l2w");
-		else if (hashedString.contains("9"))
-			hashedString = hashedString.replace("9", "c");
-		return hashedString.toLowerCase();
-	}
-
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		String s = sc.nextLine();
-		System.out.println("hashed password of String is \n" + s + "\n" + hashedString(s));
-
 	}
 }

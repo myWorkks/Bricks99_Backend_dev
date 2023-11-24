@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.marolix.Bricks99.dto.PropertyAddressDTO;
 import com.marolix.Bricks99.dto.PropertyDetailsDTO;
 import com.marolix.Bricks99.entity.PropertyAddress;
@@ -42,9 +44,16 @@ public class PropertyServiceImpl implements PropertyService {
 	@Autowired
 	private EmailSender emailSender;
 
+	@Autowired
+	private AmazonS3 amazonS3;
+	@Value("${aws.s3.bucketName}")
+	private String bucketName;
+	@Value("${aws.s3.region}")
+	private String region;
+
 	@Override
 	public PropertyDetailsDTO addProperty(PropertyDetailsDTO propertyDto) throws Bricks99Exception, IOException {
-		
+
 		Optional<Seller> s1 = sellerRepo.findById(propertyDto.getSellerId());
 		Seller seller = s1
 				.orElseThrow(() -> new Bricks99Exception(environment.getProperty("PropertyService.SELLER_NOT_FOUND")));
@@ -58,7 +67,7 @@ public class PropertyServiceImpl implements PropertyService {
 		if (!propertyEntity.isEmpty()) {
 			throw new Bricks99Exception(environment.getProperty("PropertyService.SurveynoAlreadyExists"));
 		}
-		
+
 		int propertyPhotoCount = propertyDto.getFiles().length;
 		propertyDto.setNoOfPhotosUploaded(propertyPhotoCount);
 
@@ -67,23 +76,32 @@ public class PropertyServiceImpl implements PropertyService {
 		List<String> list = new ArrayList<String>();
 		int i = 0;
 		for (MultipartFile file : files) {
-			String s = environment.getProperty("property_photos_path");
-			s = s + "/property-" + "photo-" + ++i + file.getOriginalFilename();
-			list.add(s);
-			filepaths += s + ",";
-			FileOutputStream fos = new FileOutputStream(new File(s));
 
+			String s = "property" + "photo-" + ++i + file.getOriginalFilename();
+			String url = "https://" + bucketName + ".s3." + region + ".amazonaws.com/" + s;
+			list.add(url);
+			filepaths += s + ",";
+			File file1 = new File(file.getOriginalFilename());
+			FileOutputStream fos = new FileOutputStream(file1);
 			fos.write(file.getBytes());
+			fos.close();
+			amazonS3.putObject(bucketName, s, file1);
+
 		}
 		propertyDto.setFilePaths(list);
 		PropertyDetails pt = PropertyDetailsDTO.dtoToEntity(propertyDto);
-		System.out.println(filepaths);
+		// System.out.println(filepaths);
 		pt.setFilepaths(filepaths);
-		System.out.println(pt);
-		Integer ii = propertyRepo.save(PropertyDetailsDTO.dtoToEntity(propertyDto)).getPropertyId();
-		propertyDto.setPropertyId(ii);
+		// System.out.println(pt);
+		PropertyDetails details = propertyRepo.save(PropertyDetailsDTO.dtoToEntity(propertyDto));
+		propertyDto.setPropertyId(details.getPropertyId());
 		propertyDto.setFiles(null);
+		Integer id = details.getAddress().getAddressId();
+		// System.out.println(id);
+		propertyDto.getPropertyAddress().setAddressId(id);
+		// propertyDto.setPropertyAddress()
 		propertyDto.setFilePaths(list);
+		emailSender.addedProperty(propertyDto, seller.getEmail());
 		return propertyDto;
 	}
 
@@ -155,7 +173,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public List<PropertyDetailsDTO> findAllProperties(Integer... id) throws Bricks99Exception {
-		//System.out.println(id);
+		// System.out.println(id);
 		final List<PropertyDetailsDTO> dtos = new ArrayList<PropertyDetailsDTO>();
 
 		Iterable<PropertyDetails> properties = propertyRepo.findAll();
@@ -177,3 +195,51 @@ public class PropertyServiceImpl implements PropertyService {
 	}
 
 }
+//@Override
+//public PropertyDetailsDTO addProperty(PropertyDetailsDTO propertyDto) throws Bricks99Exception, IOException {
+//	
+//	Optional<Seller> s1 = sellerRepo.findById(propertyDto.getSellerId());
+//	Seller seller = s1
+//			.orElseThrow(() -> new Bricks99Exception(environment.getProperty("PropertyService.SELLER_NOT_FOUND")));
+//	System.out.println("service called");
+//	if (seller.getStatus().toString().equalsIgnoreCase("Pending"))
+//		throw new Bricks99Exception(environment.getProperty("PropertyService.SellerNotVerified"));
+//
+//	List<PropertyDetails> propertyEntity = propertyRepo
+//			.findByAddressSurveyNo(propertyDto.getPropertyAddress().getSurveyNo());
+//
+//	if (!propertyEntity.isEmpty()) {
+//		throw new Bricks99Exception(environment.getProperty("PropertyService.SurveynoAlreadyExists"));
+//	}
+//	
+//	int propertyPhotoCount = propertyDto.getFiles().length;
+//	propertyDto.setNoOfPhotosUploaded(propertyPhotoCount);
+//
+//	MultipartFile[] files = propertyDto.getFiles();
+//	String filepaths = "";
+//	List<String> list = new ArrayList<String>();
+//	int i = 0;
+//	for (MultipartFile file : files) {
+//		String s = environment.getProperty("property_photos_path");
+//		s = s + "/property-" + "photo-" + ++i + file.getOriginalFilename();
+//		list.add(s);
+//		filepaths += s + ",";
+//		FileOutputStream fos = new FileOutputStream(new File(s));
+//
+//		fos.write(file.getBytes());
+//	}
+//	propertyDto.setFilePaths(list);
+//	PropertyDetails pt = PropertyDetailsDTO.dtoToEntity(propertyDto);
+//	//System.out.println(filepaths);
+//	pt.setFilepaths(filepaths);
+//	System.out.println(pt);
+//	PropertyDetails details= propertyRepo.save(PropertyDetailsDTO.dtoToEntity(propertyDto));
+//	propertyDto.setPropertyId(details.getPropertyId());
+//	propertyDto.setFiles(null);
+//Integer id=	details.getAddress().getAddressId();
+////System.out.println(id);
+//propertyDto.getPropertyAddress().setAddressId(id);
+//	//propertyDto.setPropertyAddress()
+//	propertyDto.setFilePaths(list);
+//	return propertyDto;
+//}
